@@ -1,19 +1,17 @@
-## <remove all of the example text and notes in < > such as this one>
-
 ## Functional Requirements
 
-1. requirement
-2. requirement
-3. requirement
-4. requirement
-5. requirement
-6. requirement
-7. requirement
-8. requirement
-9. requirement
-10. requirement
-11. requirement
-12. requirement
+1. send email
+2. make account
+3. login
+4. add event
+5. begin chat
+6. open existing chat
+7. delete email
+8. create task
+9. send task reminder
+10. search for email
+11. block email
+12. log out
 
 ## Non-functional Requirements
 
