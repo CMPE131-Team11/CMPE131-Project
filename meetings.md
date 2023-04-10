@@ -13,20 +13,18 @@
 
 
 ### 2023-04-09 at 20:00
-<meeting template would go here>
-<only fill in template once you had the meeting>
-<see example on the last date>
-<use date format YYYY-MM-DD at HH:MM>
+- Attending: Kerry, Rafael, Ketan, Gene
+- Kerry "Create Task", "Begin Chat" 
+- Ketan "Register Account", "Edit User Profile"
+- Rafael "Add image", "Send email" 
+- Gene writing requirements
+
 
 ### 2023-04-16 at 20:00
 <meeting template would go here>
 <only fill in template once you had the meeting>
 
 ### 2023-04-23 at 20:00
-- Who attended the meeting
-- Team updates (15min or less)
-  <Each team member gives an update of what they did from the last meeting and what they plan to do next. If they are stuck, bring it up here to see if others can help.>
-  - <name> worked on X. Will work on Y next. 
 
 - pair-programming (optional) (25 mins)
   <- Pair program on one part of the project. Driver will be the person responsible for that requirement.>
