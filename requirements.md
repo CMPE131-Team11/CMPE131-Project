@@ -22,36 +22,47 @@
 
 ## Use Cases
 
-1. Use Case Name (Should match functional requirement name)
-- **Pre-condition:** <can be a list or short description> Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
+1. Send email
+- **Pre-condition:** <can be a list or short description> User is logged in.
 
-- **Trigger:** <can be a list or short description> Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. 
+- **Trigger:** <can be a list or short description> User presses compose button. 
 
 - **Primary Sequence:**
   
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Et sequi incidunt 
-  3. Quis aute iure reprehenderit
-  4. ... 
-  5. ...
-  6. ...
-  7. ...
-  8. ...
-  9. ...
-  10. <Try to stick to a max of 10 steps>
+  1. User types recipient name(s) 
+  2. User writes the subject
+  3. User writes the message they want to send
+  4. User presses the "Send" button 
+  5. System prompts the user with a date box and a time box 
+  6. User inputs the date and time into respective boxes
+  7. User presses the "Schedule send" button
+  8. User is sent to the homescreen
 
-- **Primary Postconditions:** <can be a list or short description> 
+- **Primary Postconditions:** <can be a list or short description> System displays “message has been sent".
 
-- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise>
+- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise> 
+  Recipient names are not in the system	
+      a) System displays error
+      b) System prompts “Invalid Recipient name(s)”
+
+  User inputs an invalid schedule time 
+      a) System displays error
+      b) System prompts Invalid schedule time ”
+
+2.  Add images to email
+- **Pre-condition:** <can be a list or short description> The user is already logged in, user is currently composing an email, and has the image URL
+
+- **Trigger:** <can be a list or short description> User presses enter image button 
+
+- **Primary Sequence:**
   
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Ut enim ad minim veniam, quis nostrum e
-  3. ...
+  1. User is presented with a popup of screen
+  2. User inputs/pastes their URL of the image that they’ll like to input
+  3. User presses the insert button
 
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
-  
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Ut enim ad minim veniam, quis nostrum e
-  3. ...
-2. Use Case Name (Should match functional requirement name)
-   ...
+- **Primary Postconditions:** <can be a list or short description> User sees their image on the composing email
+
+- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise> 
+  The URL that they imputed is not valid	
+      a) The user is prompted with an error message
+      b) System prompts "Invalid URL"
