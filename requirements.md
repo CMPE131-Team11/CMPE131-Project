@@ -1,5 +1,3 @@
-## <remove all of the example text and notes in < > such as this one>
-
 ## Functional Requirements
 
 1. requirement
@@ -24,36 +22,50 @@
 
 ## Use Cases
 
-1. Use Case Name (Should match functional requirement name)
-- **Pre-condition:** <can be a list or short description> Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
+1. Register Account
 
-- **Trigger:** <can be a list or short description> Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. 
+- **Trigger:** A first-time user enters our application or a user clicks on the ‘register account’ button
+
 
 - **Primary Sequence:**
   
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Et sequi incidunt 
-  3. Quis aute iure reprehenderit
-  4. ... 
-  5. ...
-  6. ...
-  7. ...
-  8. ...
-  9. ...
-  10. <Try to stick to a max of 10 steps>
+  1. The user clicks the register account button
+  2. Enters a valid User Name
+  3. Enters a valid password
+  4. Enters First and Last Name
+  5. Clicks register button
 
-- **Primary Postconditions:** <can be a list or short description> 
+
+- **Primary Postconditions:** The user is logged in to their account and can do anything a signed-in user can do
+
 
 - **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise>
   
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Ut enim ad minim veniam, quis nostrum e
-  3. ...
+  1. A user enters an invalid username or password
+  2. System response with invalid username or password and reason why it’s invalid
+  3. The user re-enters a valid username and password
 
-- **Alternate Sequence <optional>:** <you can have more than one alternate sequence to describe multiple issues that may arise>
+
+2. Edit User Profile
+
+- **Trigger:** User clicks on ‘Edit Profile’ button
+
+
+- **Primary Sequence:**
   
-  1. Ut enim ad minim veniam, quis nostrum e
-  2. Ut enim ad minim veniam, quis nostrum e
-  3. ...
-2. Use Case Name (Should match functional requirement name)
-   ...
+  1. User clicks ‘edit profile’ button
+  2. User makes all desired edits
+  3. User clicks ‘Save button’
+  4. User clicks ‘Exit Profile’ button
+
+
+- **Primary Postconditions:** All edited changes are applied to the User
+
+
+
+- **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise>
+  
+  1. User clicks ‘Exit’ before ‘Save’ button
+  2. System sends alert saying ‘Do you want to sasve changes’
+  3. Systems saves changes depending on User’s answers
+
