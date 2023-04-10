@@ -1,24 +1,22 @@
 ## Functional Requirements
-
-1. send email
-2. make account
-3. login
-4. add event
+1. Register Account
+2. Edit User Profile
+3. Send email
+4. Create Task
 5. begin chat
 6. open existing chat
 7. delete email
-8. create task
+8. add event
 9. send task reminder
 10. search for email
 11. block email
 12. log out
+13. login
 
 ## Non-functional Requirements
 
-1. non-functional
-2. non-functional
-3. non-functional
-4. non-functional
+1. send email 10ms
+2. multi-language support
 
 ## Use Cases
 
@@ -89,12 +87,12 @@
 
 - **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise> 
   Recipient names are not in the system	
-      a) System displays error
-      b) System prompts “Invalid Recipient name(s)”
+      a. System displays error
+      b. System prompts “Invalid Recipient name(s)”
 
   User inputs an invalid schedule time 
-      a) System displays error
-      b) System prompts Invalid schedule time ”
+      a. System displays error
+      b. System prompts Invalid schedule time ”
 
 4.  Add images to email
 - **Pre-condition:** <can be a list or short description> The user is already logged in, user is currently composing an email, and has the image URL
@@ -111,8 +109,8 @@
 
 - **Alternate Sequence:** <you can have more than one alternate sequence to describe multiple issues that may arise> 
   The URL that they imputed is not valid	
-      a) The user is prompted with an error message
-      b) System prompts "Invalid URL"
+      a. The user is prompted with an error message
+      b. System prompts "Invalid URL"
 
 5. Create Task
 - **Pre-condition:** 
