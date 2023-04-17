@@ -21,9 +21,8 @@
 
 
 ### 2023-04-16 at 20:00
-<meeting template would go here>
-<only fill in template once you had the meeting>
-
+- Attending: Kerry, Rafael, Ketan, Gene
+- Everyone worked on familarizing themselves with mongodb
 ### 2023-04-23 at 20:00
 
 - pair-programming (optional) (25 mins)
