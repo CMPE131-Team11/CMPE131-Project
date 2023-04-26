@@ -26,6 +26,7 @@ class tasks:
         self.service = build('tasks', 'v1', credentials=self.creds)
 
     def list_tasks(self):
+        self.tasklist = []
         results = self.service.tasklists().list().execute()
         items = results.get('items', [])
 
@@ -34,8 +35,9 @@ class tasks:
         else:
             print('Task lists:')
             for item in items:
-                print(u'{0} ({1})'.format(item['title'], item['id']))
-
+                self.tasklist.append(u'{0} ({1})'.format(item['title'], item['id']))
+        return self.tasklist
+    
     def insert_tasklist(self, p_name):
         tasklist_details = {
             "kind": "tasks#taskList",
