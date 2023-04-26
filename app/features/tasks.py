@@ -28,13 +28,6 @@ class tasks:
     def list_tasks(self):
         results = self.service.tasklists().list().execute()
         items = results.get('items', [])
-
-        if not items:
-            print('No task lists found.')
-        else:
-            print('Task lists:')
-            for item in items:
-                self.tasklist.append(u'{0} ({1})'.format(item['title'], item['id']))
         return items
     
     def insert_tasklist(self, p_name):
