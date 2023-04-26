@@ -7,7 +7,6 @@ from google.auth.transport.requests import Request
 class tasks:
 
     def __init__(self):
-        self.tasklist = []
         self.SCOPES = ['https://www.googleapis.com/auth/tasks']
         self.creds = None
         if os.path.exists('token_calendar_v3.pickle'):
@@ -36,6 +35,7 @@ class tasks:
             print('Task lists:')
             for item in items:
                 self.tasklist.append(u'{0} ({1})'.format(item['title'], item['id']))
+        return self.tasklist
     
     def insert_tasklist(self, p_name):
         tasklist_details = {
@@ -43,9 +43,8 @@ class tasks:
             "title": str(p_name),
         }
 
-        results = self.service.tasklists().insert(body=tasklist_details).execute()
-        
-        self.tasklist.append(u'{0} ({1})'.format(results['title'], results['id']))
+        self.service.tasklists().insert(body=tasklist_details).execute()
+
 
     def add_task(self, task_title, task_list_id):
         task_details = {
@@ -53,7 +52,5 @@ class tasks:
             "title": str(task_title),
         }
 
-        results = self.service.tasks().insert(tasklist=task_list_id, body=task_details).execute()
-        
-        self.tasklist.append(u'{0} ({1})'.format(results['title'], results['id']))
-
+        self.service.tasks().insert(tasklist=task_list_id, body=task_details).execute()
+    
