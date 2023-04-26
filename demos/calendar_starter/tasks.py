@@ -26,17 +26,9 @@ class tasks:
         self.service = build('tasks', 'v1', credentials=self.creds)
 
     def list_tasks(self):
-        self.tasklist = []
         results = self.service.tasklists().list().execute()
         items = results.get('items', [])
-
-        if not items:
-            print('No task lists found.')
-        else:
-            print('Task lists:')
-            for item in items:
-                self.tasklist.append(u'{0} ({1})'.format(item['title'], item['id']))
-        return self.tasklist
+        return items
     
     def insert_tasklist(self, p_name):
         tasklist_details = {
@@ -44,9 +36,7 @@ class tasks:
             "title": str(p_name),
         }
 
-        results = self.service.tasklists().insert(body=tasklist_details).execute()
-        
-        print(u'{0} ({1})'.format(results['title'], results['id']))
+        self.service.tasklists().insert(body=tasklist_details).execute()
 
     def add_task(self, task_title, task_list_id):
         task_details = {
@@ -54,14 +44,5 @@ class tasks:
             "title": str(task_title),
         }
 
-        results = self.service.tasks().insert(tasklist=task_list_id, body=task_details).execute()
-        
-        print(u'{0} ({1})'.format(results['title'], results['id']))
+        self.service.tasks().insert(tasklist=task_list_id, body=task_details).execute()
 
-def main():
-    obj = tasks()
-    obj.insert_tasklist("test")
-    obj.list_tasks()
-    obj.add_task("Buy groceries", "bm9yMEJ2UmdBRUFXMmVSZg")
-if __name__=='__main__':
-    main()
