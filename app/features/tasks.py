@@ -7,6 +7,7 @@ from google.auth.transport.requests import Request
 class tasks:
 
     def __init__(self):
+        self.tasklist = []
         self.SCOPES = ['https://www.googleapis.com/auth/tasks']
         self.creds = None
         if os.path.exists('token_calendar_v3.pickle'):
@@ -34,8 +35,8 @@ class tasks:
         else:
             print('Task lists:')
             for item in items:
-                print(u'{0} ({1})'.format(item['title'], item['id']))
-
+                self.tasklist.append(u'{0} ({1})'.format(item['title'], item['id']))
+    
     def insert_tasklist(self, p_name):
         tasklist_details = {
             "kind": "tasks#taskList",
@@ -44,7 +45,7 @@ class tasks:
 
         results = self.service.tasklists().insert(body=tasklist_details).execute()
         
-        print(u'{0} ({1})'.format(results['title'], results['id']))
+        self.tasklist.append(u'{0} ({1})'.format(results['title'], results['id']))
 
     def add_task(self, task_title, task_list_id):
         task_details = {
@@ -54,13 +55,5 @@ class tasks:
 
         results = self.service.tasks().insert(tasklist=task_list_id, body=task_details).execute()
         
-        print(u'{0} ({1})'.format(results['title'], results['id']))
-
-def main():
-    obj = tasks()
-    obj.insert_tasklist("test")
-    obj.list_tasks()
-    obj.add_task("Buy groceries", "bm9yMEJ2UmdBRUFXMmVSZg")
-if __name__=='__main__':
-    main()
+        self.tasklist.append(u'{0} ({1})'.format(results['title'], results['id']))
 
