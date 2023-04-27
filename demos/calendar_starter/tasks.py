@@ -27,7 +27,7 @@ class tasks:
 
     def list_tasks(self):
         results = self.service.tasklists().list().execute()
-        items = results.get('items', [])
+        items = results.get('item', [])
         return items
     
     def insert_tasklist(self, p_name):
@@ -38,11 +38,24 @@ class tasks:
 
         self.service.tasklists().insert(body=tasklist_details).execute()
 
-    def add_task(self, task_title, task_list_id):
+    def add_task(self, task_title, task_list_name):
+        results = self.service.tasklists().list().execute()
+        tasklist_id = ''
+        for item in results['items']:
+            if item['kind'] == 'tasks#taskList' and item['title'] == task_list_name:
+                tasklist_id = item['id']
+    
         task_details = {
             "kind": "tasks#task",
             "title": str(task_title),
         }
 
-        self.service.tasks().insert(tasklist=task_list_id, body=task_details).execute()
+        self.service.tasks().insert(tasklist=tasklist_id, body=task_details).execute()
 
+def main():
+    obj = tasks()
+    obj.insert_tasklist("tasklist 2")
+    obj.add_task("adding task to tasklist 2", "tasklist 2")
+    obj.list_tasks()
+
+main()
