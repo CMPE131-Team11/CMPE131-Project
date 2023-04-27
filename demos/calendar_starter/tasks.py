@@ -38,7 +38,6 @@ class tasks:
 
         self.service.tasklists().insert(body=tasklist_details).execute()
 
-
     def add_task(self, task_title, task_list_id):
         task_details = {
             "kind": "tasks#task",
@@ -46,4 +45,4 @@ class tasks:
         }
 
         self.service.tasks().insert(tasklist=task_list_id, body=task_details).execute()
-    
+
