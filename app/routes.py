@@ -8,6 +8,9 @@ from flask import session, request, flash, redirect, render_template
 from flask_login import login_user, logout_user, login_required
 from app import myapp_obj, db
 
+@myapp_obj.before_first_request
+def create_db():
+    db.create_all()
 @myapp_obj.route("/addToSpam",methods = ['POST'])
 def add_to_spam():
     email_id = request.form['email_id']
