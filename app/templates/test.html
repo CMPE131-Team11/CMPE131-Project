@@ -1,0 +1,11 @@
+{% extends "base.html"%}
+
+{% block content %}
+<h1>Hello {{form.username.data}}</h1>
+
+<form action="" method="POST" novalidate>
+    {{form.hidden_tag()}}
+    <a href="{{url_for('delete_account')}}">Delete</a>
+    <a href="{{url_for('logout')}}">Log Out</a>
+</form>
+{% endblock %}
