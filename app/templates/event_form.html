@@ -1,0 +1,27 @@
+{% extends "base.html"%}
+
+{% block content %}
+<h1>Create an event</h1>
+<form action="/events/" method="POST" novalidate>
+    {{form.hidden_tag()}}
+    
+   <h2> {{form.title.label}} <br>
+      {{form.title(size=32)}}</h2>
+    
+   <p> {{form.start_time.label}} <br>
+       {{form.start_time(size=32)}}</p>
+
+   <p> {{form.end_time.label}} <br>
+       {{form.end_time(size=32)}}</p>
+       
+   <p> {{form.attendees.label}} <br>
+      {{form.attendees(size=32)}}</p>
+      
+   <p>
+      {{ form.description.label }} <br>
+      {{ form.description(rows=10, cols=50) }}
+   </p>
+
+    <p>{{form.submit()}}</p>
+</form>
+{% endblock %}

@@ -13,7 +13,7 @@ class user(db.Model, UserMixin):
         self.password = generate_password_hash(password)
 
     #need sign_up_()
-class email(db.Model):
+class Email(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     sender_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable = False)
     recipient = db.Column(db.String(100),nullable = False)

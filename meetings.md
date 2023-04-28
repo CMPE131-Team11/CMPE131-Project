@@ -34,6 +34,11 @@
 - Gene "Adding calendar event", "Sending task reminders"
 ### 2023-04-23 at 20:00
 
+### 2023-04-16 at 20:00
+- Attending: Kerry, Rafael, Ketan, Gene
+- Group programing using VScodeLive the login, logout, create, delete user
+### 2023-04-23 at 20:00
+
 - pair-programming (optional) (25 mins)
   <- Pair program on one part of the project. Driver will be the person responsible for that requirement.>
 

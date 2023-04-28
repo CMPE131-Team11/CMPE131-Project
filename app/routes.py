@@ -1,12 +1,12 @@
 from app.features.email_obj import Send_email
-import app.features.tasks
-import app.features.calender
-import app.features.tasks
+from app.features.tasks import tasks
+from app.features.calender import calendar_obj, event
 # from app.features.google_cred.Google import Create_Service
 from app.features.models import user
-from app.features.forms import login_form, sign_up_form, edit_profile_form, create_tasks_form, send_email_form
+from app.features.forms import login_form, sign_up_form, edit_profile_form, create_tasks_form, send_email_form, create_event_form
 from flask import session, request, flash, redirect, render_template, url_for
 from flask_login import login_user, logout_user, fresh_login_required, current_user, login_required
+from googleapiclient.errors import HttpError
 from app import myapp_obj, db
 
 
@@ -26,7 +26,6 @@ def login():
         site_user = user.query.filter_by(username=form.username.data).first()
         if site_user and site_user.check_password(form.password.data) == True:
             login_user(site_user)
-            # Create_Service()
             return redirect('/home/')
         else:
             flash("Please register for an account.")
@@ -119,9 +118,25 @@ def tasks():
         obj = tasks()
         obj.insert_tasklist(title)
         obj.add_task(subject, title)
-        flash("Task has been added")
+        flash("Task has been added, check your google calendar")
         return redirect("/home/")
 
     return render_template('signup.html', form=form)
 
-    
+@myapp_obj.route("/events/",methods = ['POST', 'GET'])
+@login_required
+def add_event():
+    form = create_event_form()
+    if form.validate_on_submit():
+        mycal = calendar_obj()
+        my_event = event(form.title.data)
+        my_event.add_attendee(form.attendees.data)
+        my_event.set_start_time(form.start_time.data)
+        my_event.set_end_time(form.end_time.data)
+        try:
+            mycal.add_event(my_event)
+            flash("Event has been added, check your google calendar")
+            return redirect("/home/")
+        except HttpError:
+            flash("Invalid Event")
+    return render_template('event_form.html', form=form)
