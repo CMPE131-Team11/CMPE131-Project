@@ -7,20 +7,13 @@ class user(db.Model, UserMixin):
     username = db.Column(db.String(100),nullable=False,unique = True)
     password = db.Column(db.String(100),nullable = False)
     emails = db.relationship('Email',backref = 'user',lazy = True)
-    #def __init__(self,username,password):
-    #self.username = username
-        #does not need self.password here
-        #self.password = password
-    #need check_password()
     def check_password(self, password):
         return check_password_hash(self.password, password)
-    #need ser_password() in sign-up/
-    # handles setting up password for new users
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
     #need sign_up_()
-class Email(db.Model):
+class email(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     sender_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable = False)
     recipient = db.Column(db.String(100),nullable = False)
