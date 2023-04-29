@@ -61,3 +61,11 @@ This google cloud developer project is unverified and will in turn throw a massi
     5. Hit sent, this will update your gmail calendar
     6. Make sure the End time is greater than the start time
     7. Note: This may prompt a verification link in the terminal
+
+- Create Tasks -- Kerry
+    1. After logged into your account, click on Create a Task
+    2. Enter the email address that you want the task to assign to
+    3. Enter the title for your task
+    4. Enter the task that you need to finish under that title.
+    5. You will be asked to sign in with your Gmail account for authenticaion. 
+    6. Go to Gmail and you will see your task being added in your Gmail Task located on the right side of the Gmail inbox page.

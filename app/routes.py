@@ -110,18 +110,23 @@ def send_email_pop():
 
 @myapp_obj.route("/tasks/",methods = ['POST', 'GET'])
 @login_required
-def tasks():
+def create_tasks():
     form = create_tasks_form()
     if form.validate_on_submit():
         title = form.title.data
-        subject = form.task_subject.data
+        body = form.task_subject.data
+        email = form.email.data
         obj = tasks()
-        obj.insert_tasklist(title)
-        obj.add_task(subject, title)
-        flash("Task has been added, check your google calendar")
-        return redirect("/home/")
-
-    return render_template('signup.html', form=form)
+        creds = obj.get_cred(email)
+        if creds:
+            obj.submit(creds)
+            obj.insert_tasklist(title)
+            obj.add_task(body, title)
+            flash("Task has been added, check your google tasks")
+            return redirect("/home/")
+        else:
+            flash("Something went wrong. Try again later.")
+    return render_template('create_tasks.html', form=form)
 
 @myapp_obj.route("/events/",methods = ['POST', 'GET'])
 @login_required

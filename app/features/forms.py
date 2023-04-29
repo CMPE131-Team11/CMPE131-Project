@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateTimeLocalField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Email
 
 class login_form(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -9,10 +9,10 @@ class login_form(FlaskForm):
     submit = SubmitField('Sign In')
 
 class create_tasks_form(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
     title = StringField('Title', validators=[DataRequired()])
     task_subject = StringField('Task', validators=[DataRequired()])
-#     submit = SubmitField('Add')
+    submit = SubmitField('Add')
 
 class sign_up_form(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

@@ -8,6 +8,11 @@ class tasks:
 
     def __init__(self):
         self.SCOPES = ['https://www.googleapis.com/auth/tasks']
+        self.service = None
+    def submit(self, creds):
+        self.service = build('tasks', 'v1', credentials=self.creds)
+
+    def get_cred(self, email):
         self.creds = None
         if os.path.exists('token_calendar_v3.pickle'):
             with open('token_calendar_v3.pickle', 'rb') as token:
@@ -22,9 +27,8 @@ class tasks:
             
             with open('token.pickle', 'wb') as token:
                 pickle.dump(self.creds, token)
+        return self.creds
             
-        self.service = build('tasks', 'v1', credentials=self.creds)
-
     def list_tasks(self):
         results = self.service.tasklists().list().execute()
         items = results.get('item', [])

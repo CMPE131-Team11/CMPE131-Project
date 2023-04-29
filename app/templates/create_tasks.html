@@ -1,0 +1,22 @@
+{% extends "base.html"%}
+
+{% block content %}
+<h1>Create Tasks</h1>
+<form action="/tasks/" method="POST" novalidate>
+    {{form.hidden_tag()}}
+    <p>
+        {{ form.email.label }} <br>
+        {{ form.email(size=32) }}
+      </p>
+    <p>
+      {{ form.title.label }} <br>
+      {{ form.title(size=32) }}
+    </p>
+    <p>
+      {{ form.task_subject.label }} <br>
+      {{ form.task_subject(rows=10, cols=50) }}
+    </p>
+    
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}
