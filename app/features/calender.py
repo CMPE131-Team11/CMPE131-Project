@@ -1,9 +1,9 @@
 from datetime import datetime
-from google_cred.Google import Create_Service
+from app.features.google_cred.Google import Create_Service
 import json
 
 class calendar_obj:
-    secret_file = 'google_cred/credentials.json'
+    secret_file = 'credentials.json'
     api_name = 'calendar'
     api_version = 'v3'
     scope = ['https://www.googleapis.com/auth/calendar']
@@ -20,23 +20,28 @@ class event:
     def __init__(self,p_name):
         self.m_name = p_name
         self.m_attendeelist = []
+        self.m_description = "This "
     
-    def set_start_time(self, p_date, p_time, p_timezone = 'America/Los_Angeles'):
-        rtc_date = datetime(p_date.m_year, p_date.m_month, p_date.m_day, p_time.m_hour, p_time.m_minute)
+    def set_start_time(self, p_datetime, p_timezone = 'America/Los_Angeles'):
+        rtc_date = datetime(p_datetime.year, p_datetime.month, p_datetime.day, p_datetime.hour, p_datetime.minute)
         self.m_start_time = {
             'dateTime': f'{rtc_date.isoformat()}',
             'timeZone': p_timezone,
         }
 
-    def set_end_time(self, p_date, p_time, p_timezone = 'America/Los_Angeles'):
-        rtc_date = datetime(p_date.m_year, p_date.m_month, p_date.m_day, p_time.m_hour, p_time.m_minute)
+    def set_end_time(self, p_datetime, p_timezone = 'America/Los_Angeles'):
+        rtc_date = datetime(p_datetime.year, p_datetime.month, p_datetime.day, p_datetime.hour, p_datetime.minute)
         self.m_end_time = {
             'dateTime': f'{rtc_date.isoformat()}',
             'timeZone': p_timezone,
         }
 
+    def add_description(self, p_description):
+        self.m_description = p_description
+
     def add_attendee(self, email):
         self.m_attendeelist.append({'email': email})
+
 
     def remove_attendee(self, email):
         self.m_attendeelist.remove({'email': email})
@@ -44,7 +49,7 @@ class event:
     def get_event(self):
         payload = {
           'summary': self.m_name,
-          'description': 'This event was created by python',
+          'description': self.m_description,
           'start':self.m_start_time,
           'end': self.m_end_time,
           'attendees': self.m_attendeelist,

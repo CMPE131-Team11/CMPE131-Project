@@ -1,0 +1,15 @@
+{% extends "base.html"%}
+
+{% block content %}
+<h1>Edit Profile</h1>
+<form action="/edit_profile/" method="POST" novalidate>
+    {{form.hidden_tag()}}
+    <p> {{form.new_username.label}} <br>
+       {{form.new_username(size=32)}}</p>
+
+    <p> {{form.new_password.label}} <br>
+       {{form.new_password(size=32)}}</p>
+
+    <p>{{form.submit()}}</p>
+</form>
+{% endblock %}
