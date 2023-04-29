@@ -10,7 +10,7 @@ class login_form(FlaskForm):
 
 class create_tasks_form(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
-    title = StringField('Title', validators=[DataRequired()])
+    title = StringField('Task List', validators=[DataRequired()])
     task_subject = StringField('Task', validators=[DataRequired()])
     submit = SubmitField('Add')
 
