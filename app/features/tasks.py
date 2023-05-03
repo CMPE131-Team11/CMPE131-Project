@@ -42,16 +42,9 @@ class tasks:
 
         self.service.tasklists().insert(body=tasklist_details).execute()
 
-<<<<<<< HEAD
-
-    def add_task(self, task_title, task_list_name):
-        tasklist_id = ''
-        results = self.service.tasklists().list().execute()
-=======
     def add_task(self, task_title, task_list_name):
         results = self.service.tasklists().list().execute()
         tasklist_id = ''
->>>>>>> adaf917 (class session)
         for item in results['items']:
             if item['kind'] == 'tasks#taskList' and item['title'] == task_list_name:
                 tasklist_id = item['id']
@@ -62,14 +55,4 @@ class tasks:
         }
 
         self.service.tasks().insert(tasklist=tasklist_id, body=task_details).execute()
-<<<<<<< HEAD
-    
-def main():
-    obj = tasks()
-    obj.insert_tasklist("tasklist 2")
-    obj.add_task("adding task to tasklist 2", "tasklist 2")
-    obj.list_tasks()
 
-main()
-=======
->>>>>>> adaf917 (class session)
