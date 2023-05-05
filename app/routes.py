@@ -10,7 +10,7 @@ from googleapiclient.errors import HttpError
 from app import myapp_obj, db
 
 
-@myapp_obj.before_first_request
+@myapp_obj.before_request
 def create_db():
     db.create_all()
 
@@ -20,12 +20,15 @@ def landing():
 
 @myapp_obj.route("/login/", methods=['GET', 'POST'])
 def login():
+    # SECRET_FILE = 'credentials.json'
+    # SCOPES = ["https://www.googleapis.com/auth/gmail.send",'https://www.googleapis.com/auth/calendar', ]
     logout_user()
     form = login_form()
     if form.validate_on_submit():
         site_user = user.query.filter_by(username=form.username.data).first()
         if site_user and site_user.check_password(form.password.data) == True:
             login_user(site_user)
+
             return redirect('/home/')
         else:
             flash("Please register for an account.")

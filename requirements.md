@@ -16,7 +16,7 @@
 ## Non-functional Requirements
 
 1. send email 10ms
-2. multi-language support
+2. implement the google api
 
 ## Use Cases
 
