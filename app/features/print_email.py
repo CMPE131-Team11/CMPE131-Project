@@ -1,86 +1,57 @@
-from __future__ import print_function
-
-import os.path
-import time
-
-from google.auth.transport.requests import Request
+import os
+import pickle
+import base64
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-from bs4 import BeautifulSoup
-
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-import pickle
-import os.path
-import base64
-import email
-from bs4 import BeautifulSoup
+import googleapiclient.discovery
+from email import message_from_bytes
 
-# If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
-
-
-def main():
-    """Shows basic usage of the Gmail API.
-    Lists the user's Gmail labels.
-    """
+def get_credentials():
     creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
     if os.path.exists('token.json'):
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-    # If there are no (valid) credentials available, let the user log in.
+
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', ['https://www.googleapis.com/auth/gmail.readonly'])
             creds = flow.run_local_server(port=0)
-        # Save the credentials for the next run
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
 
-    try:
-        # Call the Gmail API
-        service = build('gmail', 'v1', credentials=creds)
-        #results = service.users().labels().list(userId='me').execute()
-        #labels = results.get('labels', [])
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
 
-        result = service.users().messages().list(userId='me').execute()
-        messages = result.get('messages')
-        if not messages: 
-            print("You have no new messages")
-        else:
-            #msg = service.users().messages().get(userId='me', id=message['id']).execute
-            for message in messages:
-                msg = service.users().messages().get(userId='me', id=message['id']).execute()
-                payload = msg['payload']
-                headers = payload['headers']
-                for d in headers:
-                    if d['name'] == 'Subject':
-                        subject = d['value']
-                    if d['name'] == 'From':
-                        sender = d['value']
-                parts = payload.get('parts')[0]
-                data = parts['body']['data']
-                data = data.replace("-","+").replace("_","/")
-                decoded_data = base64.b64decode(data)
-                soup = BeautifulSoup(decoded_data , "lxml")
-                body = soup.body()
-                print("Subject: ", subject)
-                print("From: ", sender)
-                print("Message: ", body)
-                print('\n')
+    return creds
 
-    except HttpError as error:
-        # TODO(developer) - Handle errors from gmail API.
-        print(f'An error occurred: {error}')
+def get_email_messages(service, user_id, email_id):
+    email_data = service.users().messages().get(userId=user_id, id=email_id, format='raw').execute()
+    email_content = base64.urlsafe_b64decode(email_data['raw'].encode('ASCII'))
+    return email_content
 
+def print_the_email():
+    creds = get_credentials()
+    service = googleapiclient.discovery.build('gmail', 'v1', credentials=creds)
+    user_id = 'me'  # 'me' refers to the authenticated user
 
-if __name__ == '__main__':
-    main()
+    results = service.users().messages().list(userId=user_id, maxResults=1).execute()  # this is where you can change the amount of emails to be printed --- maxResults=1 
+    messages = results.get('messages', [])
+
+    for message in messages:
+        email_id = message['id']
+        email_content = get_email_messages(service, user_id, email_id)
+        email_message = message_from_bytes(email_content)
+
+        print(f"Subject: {email_message['subject']}")
+        print(f"From: {email_message['from']}")
+        print(f"To: {email_message['to']}")
+        print("Body:")
+
+        for part in email_message.walk():
+            if part.get_content_type() == 'text/plain':
+                body = part.get_payload(decode=True)
+                print(body.decode('utf-8'))
+        print("\n---\n")
+
+#if __name__ == '__main__':
+  # main()                
