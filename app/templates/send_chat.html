@@ -1,6 +1,7 @@
 {% extends "base.html"%}
 
 {% block content %}
+<h1>Hello {{user.username}}</h1>
 <h1>Send Chat Messages</h1>
 <form action="/chat/" method="POST" novalidate>
     {{form.hidden_tag()}}
@@ -22,6 +23,19 @@
         <div class="message">
             <p>Time: {{message.time_send}}</p>
             <p>Message From: {{message.username}}</p>
+            <p>Message Body: {{message.message}}</p>
+        </div>
+    {%endfor%}
+{%else%}
+    <p>No Messages</p>
+{%endif%}
+
+{% if message_from_user %}
+    <h3>Messages Sent</h3>
+    {% for message in message_from_user %}
+        <div>
+            <p>Time: {{message.time_send}}</p>
+            <p>Message To: {{message.receiver_username}}</p>
             <p>Message Body: {{message.message}}</p>
         </div>
     {%endfor%}

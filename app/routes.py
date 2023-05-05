@@ -153,11 +153,12 @@ def send_chat():
     form = send_chat_form()
     if form.validate_on_submit():
         if user.query.filter_by(username=form.receiver.data).first() is not None:
-            message = Chat(username=current_user.username, message=form.message.data, time_send=datetime.now(), sender_id=current_user.id, receiver_id=user.query.filter_by(username=form.receiver.data).first().id)
+            message = Chat(username=current_user.username, receiver_username=user.query.filter_by(username=form.receiver.data).first().username, message=form.message.data, time_send=datetime.now(), sender_id=current_user.id, receiver_id=user.query.filter_by(username=form.receiver.data).first().id)
             db.session.add(message)
             db.session.commit()
             return redirect(url_for("send_chat"))
         else:
             flash("Invalid username")
     message_to_user = Chat.query.filter_by(receiver_id=current_user.id).all()
-    return render_template('send_chat.html', form=form, messages=message_to_user)
+    message_from_user = Chat.query.filter_by(sender_id=current_user.id).all()
+    return render_template('send_chat.html', form=form, messages=message_to_user, message_from_user=message_from_user)
