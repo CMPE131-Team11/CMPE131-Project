@@ -28,6 +28,16 @@ class Email(db.Model):
         self.body = body
         self.emailType = "Inbox"
 
+class Chat(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    username = db.Column(db.String(100),nullable=True)
+    message = db.Column(db.String(100), nullable=False)
+    time_send = db.Column(db.DateTime, nullable=False)
+
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
 @login.user_loader
 def load_user(id):
     return user.query.get(int(id))
