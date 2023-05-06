@@ -2,11 +2,12 @@ from app.features.email_obj import Send_email
 from app.features.tasks import tasks
 from app.features.calender import calendar_obj, event
 # from app.features.google_cred.Google import Create_Service
-from app.features.models import user
-from app.features.forms import login_form, sign_up_form, edit_profile_form, create_tasks_form, send_email_form, create_event_form
+from app.features.models import user, Chat
+from app.features.forms import login_form, sign_up_form, edit_profile_form, create_tasks_form, send_email_form, create_event_form, send_chat_form
 from flask import session, request, flash, redirect, render_template, url_for
 from flask_login import login_user, logout_user, fresh_login_required, current_user, login_required
 from googleapiclient.errors import HttpError
+from datetime import datetime
 from app import myapp_obj, db
 
 
@@ -148,3 +149,19 @@ def add_event():
         except HttpError:
             flash("Invalid Event")
     return render_template('event_form.html', form=form)
+
+@myapp_obj.route("/chat/",methods = ['POST', 'GET'])
+@login_required
+def send_chat():
+    form = send_chat_form()
+    if form.validate_on_submit():
+        if user.query.filter_by(username=form.receiver.data).first() is not None:
+            message = Chat(username=current_user.username, receiver_username=user.query.filter_by(username=form.receiver.data).first().username, message=form.message.data, time_send=datetime.now(), sender_id=current_user.id, receiver_id=user.query.filter_by(username=form.receiver.data).first().id)
+            db.session.add(message)
+            db.session.commit()
+            return redirect(url_for("send_chat"))
+        else:
+            flash("Invalid username")
+    message_to_user = Chat.query.filter_by(receiver_id=current_user.id).all()
+    message_from_user = Chat.query.filter_by(sender_id=current_user.id).all()
+    return render_template('send_chat.html', form=form, messages=message_to_user, message_from_user=message_from_user)
