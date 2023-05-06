@@ -37,3 +37,8 @@ class create_event_form(FlaskForm):
     description = TextAreaField('Description')
     attendees = TextAreaField('Attendees', validators = [DataRequired()])
     submit = SubmitField('Send')
+
+class send_chat_form(FlaskForm):
+    receiver = StringField('Recipient Username', validators=[DataRequired()])
+    message = TextAreaField('Message', validators = [DataRequired()])
+    submit = SubmitField('Send')

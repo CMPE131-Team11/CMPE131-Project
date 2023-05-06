@@ -12,21 +12,16 @@ class user(db.Model, UserMixin):
     def set_password(self, password):
         self.password = generate_password_hash(password)
 
-    #need sign_up_()
-class Email(db.Model):
+class Chat(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    sender_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable = False)
-    recipient = db.Column(db.String(100),nullable = False)
-    subject  = db.Column(db.String(100),nullable = False)
-    body = db.Column(db.Text,nullable = False)
-    emailType = db.Column(db.String(100),nullable = False)
+    username = db.Column(db.String(100),nullable=True)
+    receiver_username = db.Column(db.String(100), nullable=True)
+    message = db.Column(db.String(100), nullable=False)
+    time_send = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self,sender_id,recipient,subject,body):
-        self.sender_id = sender_id
-        self.recipient = recipient
-        self.subject = subject
-        self.body = body
-        self.emailType = "Inbox"
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
 
 @login.user_loader
 def load_user(id):
