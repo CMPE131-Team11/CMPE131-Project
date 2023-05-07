@@ -4,6 +4,7 @@ from app.features.calender import calendar_obj, event
 # from app.features.google_cred.Google import Create_Service
 from app.features.models import user, Chat
 from app.features.forms import login_form, sign_up_form, edit_profile_form, create_tasks_form, send_email_form, create_event_form, send_chat_form
+from app.features.google_cred.Google import Create_Service
 from flask import session, request, flash, redirect, render_template, url_for
 from flask_login import login_user, logout_user, fresh_login_required, current_user, login_required
 from googleapiclient.errors import HttpError
@@ -21,14 +22,17 @@ def landing():
 
 @myapp_obj.route("/login/", methods=['GET', 'POST'])
 def login():
-    # SECRET_FILE = 'credentials.json'
-    # SCOPES = ["https://www.googleapis.com/auth/gmail.send",'https://www.googleapis.com/auth/calendar', ]
     logout_user()
     form = login_form()
     if form.validate_on_submit():
         site_user = user.query.filter_by(username=form.username.data).first()
         if site_user and site_user.check_password(form.password.data) == True:
             login_user(site_user)
+            SECRET_FILE = 'credentials.json'
+            SCOPES = ["https://www.googleapis.com/auth/gmail.send",'https://www.googleapis.com/auth/calendar', 'https://www.googleapis.com/auth/tasks']
+            VERSION = 'v3'
+            global goog
+            goog = Create_Service(SECRET_FILE, 'mysite', VERSION, SCOPES)
 
             return redirect('/home/')
         else:
@@ -137,7 +141,7 @@ def create_tasks():
 def add_event():
     form = create_event_form()
     if form.validate_on_submit():
-        mycal = calendar_obj()
+        mycal = calendar_obj(goog)
         my_event = event(form.title.data)
         my_event.add_attendee(form.attendees.data)
         my_event.set_start_time(form.start_time.data)

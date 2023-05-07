@@ -10,9 +10,9 @@ class calendar_obj:
     event_body = {
         'summary' : 'Events'
     }
-    def __init__(self):
-        self.m_service = Create_Service(self.secret_file, self.api_name, self.api_version, self.scope)
-
+    def __init__(self, goog):
+        self.m_service = goog
+        
     def add_event(self,p_event):
         self.m_service.events().insert(calendarId='primary', body = p_event.get_event()).execute()
 
