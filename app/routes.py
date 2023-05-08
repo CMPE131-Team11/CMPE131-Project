@@ -1,7 +1,7 @@
-from app.features.email_obj import Send_email
+from app.features.email_obj import Send_email, print_email
 from app.features.tasks import tasks
 from app.features.calender import calendar_obj, event
-# from app.features.google_cred.Google import Create_Service
+import requests
 from app.features.models import user, Chat
 from app.features.forms import login_form, sign_up_form, edit_profile_form, create_tasks_form, send_email_form, create_event_form, send_chat_form
 from flask import session, request, flash, redirect, render_template, url_for
@@ -165,3 +165,31 @@ def send_chat():
     message_to_user = Chat.query.filter_by(receiver_id=current_user.id).all()
     message_from_user = Chat.query.filter_by(sender_id=current_user.id).all()
     return render_template('send_chat.html', form=form, messages=message_to_user, message_from_user=message_from_user)
+
+@myapp_obj.route("/trash/<id>",methods = ["POST", "GET"])
+@login_required
+def move_to_trash(id):
+    userId = 'me'
+    request_url = f'https://gmail.googleapis.com/gmail/v1/users/{userId}/messages/{id}/trash'
+    response = requests.post(request_url)
+    if response.status_code == 204:
+        return 'Email moved to trash'
+    else:
+        return f'Error moving email to trash: {response.text}'
+    
+# @myapp_obj.route("/trash2/<id>",methods = ["POST", "GET"])
+# @login_required
+# def move_to_trash(id):
+#     userId = 'me'
+#     request_url = f'https://gmail.googleapis.com/gmail/v1/users/{userId}/messages/{id}/trash'
+#     response = requests.post(request_url)
+#     if response.status_code == 204:
+#         return 'Email moved to trash'
+#     else:
+#         return f'Error moving email to trash: {response.text}'
+    
+@myapp_obj.route("/inbox/", methods=['GET', 'POST'])
+@login_required
+def inbox():
+    a = print_email()
+    return render_template('inbox.html', emails = a.get_emails())
