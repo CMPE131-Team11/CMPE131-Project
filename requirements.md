@@ -4,18 +4,17 @@
 3. Send email
 4. Create Task
 5. begin chat
-6. open existing chat
+6. send chat message
 7. delete email
 8. add event
-9. send task reminder
+9. send event reminder
 10. search for email
-11. block email
-12. log out
-13. login
+11. log out
+12. login
 
 ## Non-functional Requirements
 
-1. send email 10ms
+1. send email 500ms
 2. implement the google api
 
 ## Use Cases
