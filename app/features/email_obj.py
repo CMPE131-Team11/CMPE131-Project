@@ -3,6 +3,12 @@ from email.mime.text import MIMEText
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from requests import HTTPError
+import os
+import pickle
+from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request
+import googleapiclient.discovery
+from email import message_from_bytes
 
 class Send_email:
 
@@ -31,3 +37,22 @@ class Send_email:
         except HTTPError as error:
             print(F'An error occurred: {error}')
             message = None
+
+class print_email:         
+    def get_emails(self, search_string):
+        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', ['https://www.googleapis.com/auth/gmail.readonly'])
+        creds = flow.run_local_server(port=0)
+        service = googleapiclient.discovery.build('gmail', 'v1', credentials=creds)
+        user_id = 'me'  # 'me' refers to the authenticated user
+
+        results = service.users().messages().list(userId=user_id, maxResults = 10, q=search_string).execute()  # this is where you can change the amount of emails to be printed --- maxResults=1 
+        return results.get('messages', [])
+ 
+    def search_email(self, search_string):
+        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', ['https://www.googleapis.com/auth/gmail.readonly'])
+        creds = flow.run_local_server(port=0)
+        service = googleapiclient.discovery.build('gmail', 'v1', credentials=creds)
+        user_id = 'me'  # 'me' refers to the authenticated user
+
+        results = service.users().messages().list(userId=user_id, maxResults=1, q=search_string).execute()  # this is where you can change the amount of emails to be printed --- maxResults=1 
+        return results.get('messages', [])
