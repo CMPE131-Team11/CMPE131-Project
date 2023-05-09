@@ -2,23 +2,6 @@
 
 {% block content %}
 
-<!-- <h1>Log In</h1>
-<form action="" method="POST" novalidate>
-    {{form.hidden_tag()}}
-    <p> {{form.username.label}} <br>
-       {{form.username(size=32)}}</p>
-
-    <p> {{form.password.label}} <br>
-       {{form.password(size=32)}}</p> -->
-
-    <!-- <p> {{form.remember_me.label}} <br>
-       {{form.remember_me()}}</p> -->
-
-   <!-- <p>{{form.submit()}}</p>
-
-    <a href="{{url_for('sign_up')}}"> Sign Up</a>
-</form> -->
-<!------ Include the above in your HEAD tag ---------->
 <style>
    body {
     font-family: "Lato", sans-serif;
@@ -105,7 +88,7 @@
       <div class="main">
          <div class="col-md-6 col-sm-12">
             <div class="login-form">
-               <form action="" method="POST" novalidate>
+               <form action="/login/" method="POST" novalidate>
                   {{form.hidden_tag()}}
                   <div class="form-group">
                      <label>User Name</label>
