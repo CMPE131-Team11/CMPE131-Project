@@ -8,10 +8,6 @@
         <p>
             {{email.m_body}}
         </p>
-        <form action="/inbox/deletemessage"  method="POST" novalidate>
-            <input id="email_id" name="email_id" style="display: none;" type="text" value="{{email.id}}">
-            <button id="delete_email" name="delete_email" type="submit">delete</button> 
-        </form>
     {% endfor %}
 
 

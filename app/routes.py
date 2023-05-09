@@ -1,4 +1,4 @@
-from app.features.email_obj import Send_email, print_email
+from app.features.email_obj import Send_email, my_email_client
 from app.features.tasks import tasks
 from app.features.calender import calendar_obj, event
 import requests
@@ -21,8 +21,6 @@ def landing():
 
 @myapp_obj.route("/login/", methods=['GET', 'POST'])
 def login():
-    # SECRET_FILE = 'credentials.json'
-    # SCOPES = ["https://www.googleapis.com/auth/gmail.send",'https://www.googleapis.com/auth/calendar', ]
     logout_user()
     form = login_form()
     if form.validate_on_submit():
@@ -49,9 +47,7 @@ def sign_up():
     if form.validate_on_submit():
         existing_user = user.query.filter_by(username=form.username.data).first()
         if existing_user == None:
-            # create new user
             new_user = user(username = form.username.data)
-            # pass into set_password()
             new_user.set_password(form.password.data)
             db.session.add(new_user)
             db.session.commit()
@@ -166,35 +162,11 @@ def send_chat():
     message_from_user = Chat.query.filter_by(sender_id=current_user.id).all()
     return render_template('send_chat.html', form=form, messages=message_to_user, message_from_user=message_from_user)
 
-@myapp_obj.route("/inbox/deletemessage",methods = ["POST", "GET"])
-@login_required
-def move_to_trash():
-    userId = 'me'
-    if (request.method == 'POST'):
-        if('delete_email' in request.form):
-            
-            id = request.form['email_id']
-            print(id)
-            # request_url = f'https://gmail.googleapis.com/gmail/v1/users/{userId}/messages/{id}/trash'
-            # response = requests.post(request_url)
-            # if response.status_code == 204:
-            #     return 'Email moved to trash'
-            # else:
-            #     return f'Error moving email to trash: {response.text}'
-    
-# @myapp_obj.route("/trash2/<id>",methods = ["POST", "GET"])
-# @login_required
-# def move_to_trash(id):
-#     userId = 'me'
-#     request_url = f'https://gmail.googleapis.com/gmail/v1/users/{userId}/messages/{id}/trash'
-#     response = requests.post(request_url)
-#     if response.status_code == 204:
-#         return 'Email moved to trash'
-#     else:
-#         return f'Error moving email to trash: {response.text}'
-    
 @myapp_obj.route("/inbox/", methods=['GET', 'POST'])
 @login_required
 def inbox():
-    a = print_email()
-    return render_template('inbox.html', emails = a.get_emails())
+    form = search_form()
+    if form.validate_on_submit():       
+        return render_template('inbox.html', emails = my_email_client.search_email(form.search_string.data))
+
+    return render_template('inbox.html', emails = my_email_client.get_emails())
