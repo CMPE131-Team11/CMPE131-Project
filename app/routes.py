@@ -136,13 +136,14 @@ def create_tasks():
 @myapp_obj.route("/events/",methods = ['POST', 'GET'])
 @login_required
 def add_event():
-    form = create_event_form()
+    form = create_event_form(reminder = 15)
     if form.validate_on_submit():
         mycal = calendar_obj()
         my_event = event(form.title.data)
         my_event.add_attendee(form.attendees.data)
         my_event.set_start_time(form.start_time.data)
         my_event.set_end_time(form.end_time.data)
+        my_event.set_reminder(form.reminder.data)
         try:
             mycal.add_event(my_event)
             flash("Event has been added, check your google calendar")
