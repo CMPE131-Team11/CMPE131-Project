@@ -166,16 +166,21 @@ def send_chat():
     message_from_user = Chat.query.filter_by(sender_id=current_user.id).all()
     return render_template('send_chat.html', form=form, messages=message_to_user, message_from_user=message_from_user)
 
-@myapp_obj.route("/trash/<id>",methods = ["POST", "GET"])
+@myapp_obj.route("/inbox/deletemessage",methods = ["POST", "GET"])
 @login_required
-def move_to_trash(id):
+def move_to_trash():
     userId = 'me'
-    request_url = f'https://gmail.googleapis.com/gmail/v1/users/{userId}/messages/{id}/trash'
-    response = requests.post(request_url)
-    if response.status_code == 204:
-        return 'Email moved to trash'
-    else:
-        return f'Error moving email to trash: {response.text}'
+    if (request.method == 'POST'):
+        if('delete_email' in request.form):
+            
+            id = request.form['email_id']
+            print(id)
+            # request_url = f'https://gmail.googleapis.com/gmail/v1/users/{userId}/messages/{id}/trash'
+            # response = requests.post(request_url)
+            # if response.status_code == 204:
+            #     return 'Email moved to trash'
+            # else:
+            #     return f'Error moving email to trash: {response.text}'
     
 # @myapp_obj.route("/trash2/<id>",methods = ["POST", "GET"])
 # @login_required

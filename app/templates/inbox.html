@@ -1,7 +1,6 @@
 {% extends "base.html"%}
 
 {% block content %}
-<form action="" method="POST" novalidate>
     {% for email in emails%} 
         <h1>{{email.m_subject}}</h1>
         <h2>From: {{email.m_sender}}</h2>
@@ -9,7 +8,11 @@
         <p>
             {{email.m_body}}
         </p>
-        <button onclick="{{email.delete()}}">Click me</button> 
+        <form action="/inbox/deletemessage"  method="POST" novalidate>
+            <input id="email_id" name="email_id" style="display: none;" type="text" value="{{email.id}}">
+            <button id="delete_email" name="delete_email" type="submit">delete</button> 
+        </form>
     {% endfor %}
-</form>
+
+
 {% endblock %}
