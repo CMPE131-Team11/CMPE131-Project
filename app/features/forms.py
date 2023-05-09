@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateTimeLocalField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateTimeLocalField, IntegerField
 from wtforms.validators import DataRequired
 
 class login_form(FlaskForm):
@@ -36,6 +36,7 @@ class create_event_form(FlaskForm):
     title = TextAreaField('Title', validators = [DataRequired()])
     description = TextAreaField('Description')
     attendees = TextAreaField('Attendees', validators = [DataRequired()])
+    reminder = IntegerField('Minutes')
     submit = SubmitField('Send')
 
 class send_chat_form(FlaskForm):

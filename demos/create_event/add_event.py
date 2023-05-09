@@ -15,6 +15,6 @@ endtime = time(9)
 enddate = date(2023, 4, 30)
 myevent.set_end_time(enddate, endtime)
 
-myevent.add_attendee('gene.luong@sjsu.edu')
+# myevent.add_attendee('gene.luong@sjsu.edu')
 
 mycal.add_event(myevent)
