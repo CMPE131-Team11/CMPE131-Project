@@ -3,7 +3,7 @@ from app.features.tasks import tasks
 from app.features.calender import calendar_obj, event
 import requests
 from app.features.models import user, Chat
-from app.features.forms import login_form, sign_up_form, edit_profile_form, create_tasks_form, send_email_form, create_event_form, send_chat_form
+from app.features.forms import login_form, sign_up_form, edit_profile_form, create_tasks_form, send_email_form, create_event_form, send_chat_form, search_form
 from flask import session, request, flash, redirect, render_template, url_for
 from flask_login import login_user, logout_user, fresh_login_required, current_user, login_required
 from googleapiclient.errors import HttpError

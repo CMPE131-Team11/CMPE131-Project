@@ -1,6 +1,7 @@
 {% extends "base.html"%}
 
 {% block content %}
+    <form action="/search_email/" method="POST" novalidate>   
     {% for email in emails%} 
         <h1>{{email.m_subject}}</h1>
         <h2>From: {{email.m_sender}}</h2>
