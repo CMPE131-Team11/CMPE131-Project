@@ -1,17 +1,68 @@
-{% extends "base.html"%}
+{% extends "base.html" %}
 
 {% block content %}
-    <form action="/search_email/" method="POST" novalidate>   
-    
-    </form>
-    {% for email in emails%} 
-        <h1>{{email.m_subject}}</h1>
-        <h2>From: {{email.m_sender}}</h2>
-        <h2>To: {{email.m_to}}</h2>
-        <p>
-            {{email.m_body}}
-        </p>
+
+<style>
+body {
+    font-family: "Lato", sans-serif;
+    line-height: 1.6;
+    background-color: white;
+    color: #333; 
+}
+
+.title h1 {
+    font-size: 2.2em;
+    color: #333; 
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.email-item {
+    border: 1px solid #ddd;
+    padding: 1em;
+    margin-bottom: 1em;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+    color: #333; 
+}
+
+.email-item h1{
+    font-size: 1.5em;
+    color: #333; 
+}
+ 
+.email-item h2{
+    font-size: 1em;
+     color: #333;
+}
+
+email-item h3{
+    font-size: 1em;
+      color: #333;
+}
+
+email-item body{
+    font-size: 1em;
+      color: #0000;
+}
+
+</style>
+<div class="title">
+    <h1>Inbox</h1>
+</div>
+    <div class="form-container">
+        <form action="/search_email/" method="POST" novalidate>
+            <!-- Form fields go here -->
+        </form>
+    </div>
+    {% for email in emails %} 
+        <div class="email-item">
+            <h1>{{ email.m_subject }}</h1>
+            <h2>From: {{ email.m_sender }}</h2>
+            <h2>To: {{ email.m_to }}</h2>
+            <body>
+                {{ email.m_body }}
+            </body>
+        </div>
     {% endfor %}
-
-
 {% endblock %}
