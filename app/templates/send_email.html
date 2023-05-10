@@ -1,22 +1,90 @@
 {% extends "base.html"%}
 
 {% block content %}
-<h1>Send Email</h1>
-<form action="/send_email/" method="POST" novalidate>
-    {{form.hidden_tag()}}
-    <p>
-      {{ form.recipient.label }} <br>
-      {{ form.recipient(size=32) }}
-    </p>
-    <p>
-      {{ form.subject.label }} <br>
-      {{ form.subject(size=32) }}
-    </p>
-    <p>
-      {{ form.body.label }} <br>
-      {{ form.body(rows=10, cols=50) }}
-    </p>
-    
-    <p>{{ form.submit() }}</p>
-</form>
+
+<style>
+  body {
+  font-family: "Lato", sans-serif;
+}
+
+.main-head{
+  height: 150px;
+  background: #FFF;
+}
+
+.sidenav {
+  height: 100%;
+  background-color: #000;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.main {
+  padding: 0px 10px;
+}
+
+
+@media screen and (min-width: 768px){
+  .main{
+    margin-left: 40%; 
+  }
+  .sidenav{
+    width: 40%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+  }
+  .send-form{
+    margin-top: 70%;
+  }
+}
+
+.send-mail{
+  margin-top: 20%;
+  padding: 60px;
+  color: #fff;
+}
+
+.send-mail h1{
+  font-weight: 300;
+}
+
+.btn-black{
+  background-color: #000 !important;
+  color: #fff;
+}
+
+</style>
+<div class="sidenav">
+  <div class = "send-mail">
+    <h1>Send Email Page</h1>
+    <p>Input email contents here.</p>
+  </div>
+</div>
+
+<div class="main">
+  <div class="col-md-6 col-sm-12">
+    <div class="send-form">
+      <form action="/send_email/" method="POST" novalidate>
+        {{form.hidden_tag()}}
+        <div class="form-group">
+          <label>Recipient</label>
+          {{form.recipient(type="text", class="form-control", placeholder="Recipient")}}
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          {{form.subject(type="subject", class="form-control", placeholder="Subject")}}
+        </div>
+        <div class="form-group">
+          <label>Body</label>
+          {{form.body(type="body", class="form-control", placeholder="Body")}}
+        </div>
+        {{form.submit(type="submit", class="btn btn-black")}}
+      </form>
+    </div>
+  </div>
+</div>
+
+
 {% endblock %}
