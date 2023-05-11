@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .kerry {
+        transition: 1s;
+    }
+
+    .kerry:hover {
+        transform: scale(5) rotate(1080deg);
+    }
+
+</style>
+<div class="text-center">
+    <h1>Create Tasks</h1>
+</div>
+<form action="/tasks/" method="POST" nonvalidate>
+    {{form.hidden_tag()}}
+    <!-- Email input -->
+    <div class="form-outline form-control m-4">
+      {{form.email(id="form2Example1", class="form-control", placeholder='Enter Email')}}
+      <label class="form-label" for="form2Example1">Email address</label>
+    </div>
+  
+    <!-- Password input -->
+    <div class="form-outline form-control m-4">
+      {{form.title(id="form2Example2", class="form-control", placeholder='Title for Task List')}}
+      <label class="form-label" for="form2Example2">Task Title</label>
+    </div>
+
+    <div class="form-outline form-control m-4">
+        {{form.task_subject(id="form2Example2", class="form-control", placeholder='Enter Task')}}
+        <label class="form-label" for="form2Example2">Task</label>
+      </div>
+    <div class="form-outline form-control text-center">
+        <!-- Submit button -->
+    {{form.submit(class="btn btn-primary btn-block mb-4 form-control")}}
+    <a class="btn btn-warning kerry" href="{{url_for('home')}}">Home</a>
+    </div>
+    
+  </form>
+
+  {% endblock %}

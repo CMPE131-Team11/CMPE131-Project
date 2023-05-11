@@ -116,28 +116,30 @@ def create_tasks():
         title = form.title.data
         body = form.task_subject.data
         email = form.email.data
-        obj = tasks()
-        creds = obj.get_cred(email)
+        task = tasks()
+        creds = task.get_cred(email)
         if creds:
-            obj.submit(creds)
-            obj.insert_tasklist(title)
-            obj.add_task(body, title)
+            task.submit(creds)
+            task.insert_tasklist(title)
+            task.add_task(body, title)
             flash("Task has been added, check your google tasks")
-            return redirect("/home/")
+            flash(task.list_tasks())
+            return redirect("/tasks/")
         else:
             flash("Something went wrong. Try again later.")
-    return render_template('create_tasks.html', form=form)
+    return render_template('task_boot.html', form=form)
 
 @myapp_obj.route("/events/",methods = ['POST', 'GET'])
 @login_required
 def add_event():
-    form = create_event_form()
+    form = create_event_form(reminder = 15)
     if form.validate_on_submit():
         mycal = calendar_obj()
         my_event = event(form.title.data)
         my_event.add_attendee(form.attendees.data)
         my_event.set_start_time(form.start_time.data)
         my_event.set_end_time(form.end_time.data)
+        my_event.set_reminder(form.reminder.data)
         try:
             mycal.add_event(my_event)
             flash("Event has been added, check your google calendar")
@@ -155,12 +157,11 @@ def send_chat():
             message = Chat(username=current_user.username, receiver_username=user.query.filter_by(username=form.receiver.data).first().username, message=form.message.data, time_send=datetime.now(), sender_id=current_user.id, receiver_id=user.query.filter_by(username=form.receiver.data).first().id)
             db.session.add(message)
             db.session.commit()
-            return redirect(url_for("send_chat"))
         else:
             flash("Invalid username")
-    message_to_user = Chat.query.filter_by(receiver_id=current_user.id).all()
-    message_from_user = Chat.query.filter_by(sender_id=current_user.id).all()
-    return render_template('send_chat.html', form=form, messages=message_to_user, message_from_user=message_from_user)
+    exist_user = user.query.all()
+    list = Chat.query.all()
+    return render_template('chat_boot2.html', list=list, form=form, exist_user=exist_user)
 
 @myapp_obj.route("/inbox/", methods=['GET', 'POST'])
 @login_required
