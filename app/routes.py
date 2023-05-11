@@ -1,4 +1,4 @@
-from app.features.email_obj import Send_email, my_email_client
+from app.features.email_obj import Send_email, print_email
 from app.features.tasks import tasks
 from app.features.calender import calendar_obj, event
 import requests
@@ -165,8 +165,9 @@ def send_chat():
 @myapp_obj.route("/inbox/", methods=['GET', 'POST'])
 @login_required
 def inbox():
+    my_email_client = print_email()
     form = search_form()
     if form.validate_on_submit():       
-        return render_template('inbox.html', emails = my_email_client.search_email(form.search_string.data))
+        return render_template('inbox.html', emails = my_email_client.search_email(form.search_string.data), form = form)
 
-    return render_template('inbox.html', emails = my_email_client.get_emails())
+    return render_template('inbox.html', emails = my_email_client.get_emails(), form = form)
