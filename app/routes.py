@@ -133,7 +133,7 @@ def create_tasks():
 @login_required
 def add_event():
     form = create_event_form(reminder = 15)
-    if form.validate_on_submit():
+    if form.validate_on_submit() and form.start_time.data < form.end_time.data:
         mycal = calendar_obj()
         my_event = event(form.title.data)
         my_event.add_attendee(form.attendees.data)
