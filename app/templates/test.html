@@ -1,16 +1,70 @@
 {% extends "base.html"%}
 
 {% block content %}
+
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .myButton {
+        font-size: 20px;
+        padding: 10px 20px;
+        margin: 10px;
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+</style>
+
 <h1>Hello {{user.username}}</h1>
 
-<form action="" method="POST" novalidate>
-    <a href="{{url_for('delete_account')}}">Delete</a>
-    <a href="{{url_for('logout')}}">Log Out</a>
-    <a href="{{url_for('edit_user_profile')}}">Edit Profile</a>
-    <a href="{{url_for('send_email_pop')}}">Send Email</a>
-    <a href ="{{url_for('add_event')}}">Add Event To Calendar</a>
-    <a href ="{{url_for('create_tasks')}}">Create a Task</a>
-    <a href ="{{url_for('send_chat')}}">Send Chat</a>
-    <a href ="{{url_for('inbox')}}">inbox</a>
-</form>
+<script>
+    var urls = {
+        delete_account: "{{ url_for('delete_account') }}",
+        logout: "{{ url_for('logout') }}",
+        edit_user_profile: "{{ url_for('edit_user_profile') }}",
+        send_email_pop: "{{ url_for('send_email_pop') }}",
+        add_event: "{{ url_for('add_event') }}",
+        create_tasks: "{{ url_for('create_tasks') }}",
+        send_chat: "{{ url_for('send_chat') }}",
+        inbox: "{{ url_for('inbox') }}"
+    }
+</script>
+
+<div class="button-container">
+    <form action="" method="POST" novalidate>
+        <button class="myButton" onclick="location.href=urls.send_email_pop;" type="button">Send Email</button>
+        <button class="myButton" onclick="location.href=urls.inbox;" type="button">Inbox</button>
+        <button class="myButton" onclick="location.href=urls.edit_user_profile;" type="button">Edit Profile</button>
+        <button class="myButton" onclick="location.href=urls.add_event;" type="button">Add Event To Calendar</button>
+        <button class="myButton" onclick="location.href=urls.create_tasks;" type="button">Create a Task</button>
+        <button class="myButton" onclick="location.href=urls.send_chat;" type="button">Send Chat</button>
+        <button class="myButton" onclick="location.href=urls.delete_account;" type="button">Delete</button>
+        <button class="myButton" onclick="location.href=urls.logout;" type="button">Log Out</button>
+    </form>
+</div>
+
 {% endblock %}
