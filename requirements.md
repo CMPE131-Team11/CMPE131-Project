@@ -5,7 +5,7 @@
 4. Create Task
 5. begin chat
 6. send chat message
-7. delete email
+7. open group chat
 8. add event
 9. send event reminder
 10. search for email

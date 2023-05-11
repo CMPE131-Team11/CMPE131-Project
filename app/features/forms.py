@@ -43,3 +43,7 @@ class send_chat_form(FlaskForm):
     receiver = StringField('Recipient Username', validators=[DataRequired()])
     message = TextAreaField('Message', validators = [DataRequired()])
     submit = SubmitField('Send')
+
+class search_form(FlaskForm):
+    search_string = StringField('Search String', validators=[DataRequired()])
+    search = SubmitField('search')
