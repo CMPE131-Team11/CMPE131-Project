@@ -7,10 +7,10 @@ from google.auth.transport.requests import Request
 class tasks:
 
     def __init__(self):
-        self.SCOPES = ['https://www.googleapis.com/auth/tasks']
+        self.SCOPES = ['https://www.googleapis.com/auth/tasks']         # gmail authentication 
         self.service = None
     def submit(self, creds):
-        self.service = build('tasks', 'v1', credentials=self.creds)
+        self.service = build('tasks', 'v1', credentials=self.creds)     # gmail api
 
     def get_cred(self, email):
         self.creds = None
@@ -22,7 +22,7 @@ class tasks:
             if self.creds and self.creds.expired and self.creds.refresh_token:
                 self.creds.refresh(Request())
             else:
-                flow = InstalledAppFlow.from_client_secrets_file('credentials.json', 'https://www.googleapis.com/auth/tasks')
+                flow = InstalledAppFlow.from_client_secrets_file('credentials.json', 'https://www.googleapis.com/auth/tasks')          # gmail developer console
                 self.creds = flow.run_local_server(port=0)
             
             with open('token.pickle', 'wb') as token:
@@ -40,7 +40,7 @@ class tasks:
             "title": str(p_name),
         }
 
-        self.service.tasklists().insert(body=tasklist_details).execute()
+        self.service.tasklists().insert(body=tasklist_details).execute()            # add title for tasklist
 
     def add_task(self, task_title, task_list_name):
         results = self.service.tasklists().list().execute()
@@ -54,5 +54,5 @@ class tasks:
             "title": str(task_title),
         }
 
-        self.service.tasks().insert(tasklist=tasklist_id, body=task_details).execute()
+        self.service.tasks().insert(tasklist=tasklist_id, body=task_details).execute()          # Add task under specific tasklist
 
