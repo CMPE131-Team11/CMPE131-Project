@@ -1,9 +1,9 @@
-from app.features.email_obj import Send_email
+from app.features.email_obj import Send_email, print_email
 from app.features.tasks import tasks
 from app.features.calender import calendar_obj, event
-# from app.features.google_cred.Google import Create_Service
+import requests
 from app.features.models import user, Chat
-from app.features.forms import login_form, sign_up_form, edit_profile_form, create_tasks_form, send_email_form, create_event_form, send_chat_form
+from app.features.forms import login_form, sign_up_form, edit_profile_form, create_tasks_form, send_email_form, create_event_form, send_chat_form, search_form
 from flask import session, request, flash, redirect, render_template, url_for
 from flask_login import login_user, logout_user, fresh_login_required, current_user, login_required
 from googleapiclient.errors import HttpError
@@ -21,8 +21,6 @@ def landing():
 
 @myapp_obj.route("/login/", methods=['GET', 'POST'])
 def login():
-    # SECRET_FILE = 'credentials.json'
-    # SCOPES = ["https://www.googleapis.com/auth/gmail.send",'https://www.googleapis.com/auth/calendar', ]
     logout_user()
     form = login_form()
     if form.validate_on_submit():
@@ -49,9 +47,7 @@ def sign_up():
     if form.validate_on_submit():
         existing_user = user.query.filter_by(username=form.username.data).first()
         if existing_user == None:
-            # create new user
             new_user = user(username = form.username.data)
-            # pass into set_password()
             new_user.set_password(form.password.data)
             db.session.add(new_user)
             db.session.commit()
@@ -137,7 +133,7 @@ def create_tasks():
 @login_required
 def add_event():
     form = create_event_form(reminder = 15)
-    if form.validate_on_submit():
+    if form.validate_on_submit() and form.start_time.data < form.end_time.data:
         mycal = calendar_obj()
         my_event = event(form.title.data)
         my_event.add_attendee(form.attendees.data)
@@ -163,21 +159,16 @@ def send_chat():
             db.session.commit()
         else:
             flash("Invalid username")
-        return redirect(url_for("send_chat"))
-  
-    # message_to_user = Chat.query.filter_by(receiver_id=current_user.id).order_by(Chat.time_send.asc()).all()
-    # message_from_user = Chat.query.filter_by(sender_id=current_user.id).order_by(Chat.time_send.asc()).all()
-    # exist_user = user.query.all()
-    # list = []
-    # i = j = 0
-    # while i < len(message_to_user) and j < len(message_from_user):
-    #     if message_to_user[i].time_send < message_from_user[j].time_send:
-    #         list.append(message_to_user[i])
-    #         i += 1
-    #     else:
-    #         list.append(message_from_user[j])
-    #         j += 1
-    # list += message_to_user[i:] + message_from_user[j:]
     exist_user = user.query.all()
     list = Chat.query.all()
     return render_template('chat_boot2.html', list=list, form=form, exist_user=exist_user)
+
+@myapp_obj.route("/inbox/", methods=['GET', 'POST'])
+@login_required
+def inbox():
+    my_email_client = print_email()
+    form = search_form()
+    if form.validate_on_submit():       
+        return render_template('inbox.html', emails = my_email_client.search_email(form.search_string.data), form = form)
+
+    return render_template('inbox.html', emails = my_email_client.get_emails(), form = form)
