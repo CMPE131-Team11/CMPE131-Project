@@ -180,5 +180,4 @@ def send_chat():
     # list += message_to_user[i:] + message_from_user[j:]
     exist_user = user.query.all()
     list = Chat.query.all()
-
     return render_template('chat_boot2.html', list=list, form=form, exist_user=exist_user)
