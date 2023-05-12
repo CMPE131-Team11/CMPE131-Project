@@ -3,15 +3,13 @@ from app.features.google_cred.Google import Create_Service
 import json
 
 class calendar_obj:
-    secret_file = 'credentials.json'
+    secret_file = 'credentials.json'                     # gmail developer console
     api_name = 'calendar'
     api_version = 'v3'
-    scope = ['https://www.googleapis.com/auth/calendar']
-    event_body = {
-        'summary' : 'Events'
-    }
+    scope = ['https://www.googleapis.com/auth/calendar'] # gmail permissions
+
     def __init__(self):
-        self.m_service = Create_Service(self.secret_file, self.api_name, self.api_version, self.scope)
+        self.m_service = Create_Service(self.secret_file, self.api_name, self.api_version, self.scope) # gmail api site
 
     def add_event(self,p_event):
         self.m_service.events().insert(calendarId='primary', body = p_event.get_event()).execute()

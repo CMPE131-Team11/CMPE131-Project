@@ -24,32 +24,30 @@ class Send_email:
         self.m_subject = p_subject
 
     def send(self):
-        SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
-        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
-        creds = flow.run_local_server(port=0)
-        service = build('gmail', 'v1', credentials=creds)
-        message = MIMEText(self.m_body)
+        SCOPES = ["https://www.googleapis.com/auth/gmail.send"]                      # gmail permissions
+        flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES) # gmail developer console
+        creds = flow.run_local_server(port=0)                                        # authenication tokens
+        service = build('gmail', 'v1', credentials=creds)                            # gmail api
+        message = MIMEText(self.m_body)                                              
         message['to'] = self.m_recipient
         message['subject'] = self.m_subject
         create_message = {'raw': base64.urlsafe_b64encode(message.as_bytes()).decode()}
 
         try:
-            message = (service.users().messages().send(userId="me", body=create_message).execute())
+            message = (service.users().messages().send(userId="me", body=create_message).execute()) #error message
             print(F'sent message to {message} Message Id: {message["id"]}')
         except HTTPError as error:
             print(F'An error occurred: {error}')
             message = None
 
-class print_email:
-    secret_file = 'credentials.json'
-    api_name = 'gmail'
-    api_version = 'v1'
-    scope = ['https://mail.google.com/']
-    event_body = {
-        'summary' : 'Events'
-    }
+class inbox_obj:
+    secret_file = 'credentials.json'            # gmail developer console
+    api_name = 'gmail'                          
+    api_version = 'v1'                          
+    scope = ['https://mail.google.com/']        # gmail permissions
+
     def __init__(self):
-        self.service = Create_Service(self.secret_file, self.api_name, self.api_version, self.scope)
+        self.service = Create_Service(self.secret_file, self.api_name, self.api_version, self.scope) # gmail api site
         self.user_id = 'me'  # 'me' refers to the authenticated user
 
     def get_emails(self):
@@ -94,10 +92,7 @@ class print_email:
                 pass
         return emails
     
-    def delete_email(self, p_id):
-        self.service.users().messages().delete(userId='me', id=p_id).execute()
-    
-class email_obj():
+class email_obj():  
     def __init__(self, p_id, p_subject, p_sender, p_to, p_body):
         self.m_id = p_id
         self.m_subject = p_subject

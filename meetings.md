@@ -43,6 +43,12 @@
 - Rafael "search email", "print email" 
 - Gene "delete email", "search email", "print email" 
 
+### 2023-05-11 at 20:00
+- Attending: Kerry, Rafael, Ketan, Gene
+- Kerry and Raf front end
+- Ketan edit profile font end
+- Everyone documentation 
+
 - pair-programming (optional) (25 mins)
   <- Pair program on one part of the project. Driver will be the person responsible for that requirement.>
 

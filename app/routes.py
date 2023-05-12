@@ -1,4 +1,4 @@
-from app.features.email_obj import Send_email, print_email
+from app.features.email_obj import Send_email, inbox_obj
 from app.features.tasks import tasks
 from app.features.calender import calendar_obj, event
 import requests
@@ -14,7 +14,7 @@ from app import myapp_obj, db
 @myapp_obj.before_request
 def create_db():
     db.create_all()
-
+    
 @myapp_obj.route("/")
 def landing():
     return render_template('landing.html')
@@ -77,14 +77,16 @@ def edit_user_profile():
     form = edit_profile_form()
     if form.validate_on_submit():
         user_id = current_user.id 
-        # user_var = user.query.filter(user.id == current_user.id)
         user_var = user.query.get_or_404(current_user.id)
         exists = user.query.filter(user.username == form.new_username.data).first() is not None
-        user_var.username = form.new_username.data
-        user_var.set_password(form.new_password.data)
-        db.session.add(user_var)
-        db.session.commit()
-        return redirect('/home/')
+        if exists and current_user.username != form.new_username.data:
+            flash("Username is already taken")
+        else:
+            user_var.username = form.new_username.data
+            user_var.set_password(form.new_password.data)
+            db.session.add(user_var)
+            db.session.commit()
+            return redirect('/home/')
     return render_template('edit_profile.html', form=form)
 
 
@@ -163,7 +165,7 @@ def send_chat():
 @myapp_obj.route("/inbox/", methods=['GET', 'POST'])
 @login_required
 def inbox():
-    my_email_client = print_email()
+    my_email_client = inbox_obj()
     form = search_form()
     if form.validate_on_submit():       
         return render_template('inbox.html', emails = my_email_client.search_email(form.search_string.data), form = form)
