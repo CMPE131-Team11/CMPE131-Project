@@ -1,5 +1,6 @@
 import base64
 from email.mime.text import MIMEText
+from app.features.google_cred.Google import Create_Service
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from requests import HTTPError
@@ -40,21 +41,15 @@ class Send_email:
             message = None
 
 class print_email:
+    secret_file = 'credentials.json'
+    api_name = 'gmail'
+    api_version = 'v1'
+    scope = ['https://mail.google.com/']
+    event_body = {
+        'summary' : 'Events'
+    }
     def __init__(self):
-        self.creds = None
-        if os.path.exists("token.pickle"):
-            with open("token.pickle", "rb") as token:
-                self.creds = pickle.load(token)
-        if not self.creds or not self.creds.valid:
-            if self.creds and self.creds.expired and self.creds.refresh_token:
-                self.creds.refresh(Request())
-            else:
-                self.flow = InstalledAppFlow.from_client_secrets_file('credentials.json', ['https://mail.google.com/'])
-                self.creds = self.flow.run_local_server(port=0)
-            # save the credentials for the next run
-            with open("token.pickle", "wb") as token:
-                pickle.dump(self.creds, token)
-        self.service = googleapiclient.discovery.build('gmail', 'v1', credentials=self.creds)
+        self.service = Create_Service(self.secret_file, self.api_name, self.api_version, self.scope)
         self.user_id = 'me'  # 'me' refers to the authenticated user
 
     def get_emails(self):
