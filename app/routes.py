@@ -80,14 +80,11 @@ def edit_user_profile():
         # user_var = user.query.filter(user.id == current_user.id)
         user_var = user.query.get_or_404(current_user.id)
         exists = user.query.filter(user.username == form.new_username.data).first() is not None
-        if exists:
-            flash("Username is already taken")
-        else:
-            user_var.username = form.new_username.data
-            user_var.set_password(form.new_password.data)
-            db.session.add(user_var)
-            db.session.commit()
-            return redirect('/home/')
+        user_var.username = form.new_username.data
+        user_var.set_password(form.new_password.data)
+        db.session.add(user_var)
+        db.session.commit()
+        return redirect('/home/')
     return render_template('edit_profile.html', form=form)
 
 
