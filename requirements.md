@@ -1,16 +1,16 @@
 ## Functional Requirements
-1. Register Account
-2. Edit User Profile
-3. Send email
-4. Create Task
-5. begin chat
-6. send chat message
-7. open group chat
-8. add event
-9. send event reminder
-10. search for email
-11. log out
-12. login
+1. Register Account     group
+2. Edit User Profile    Ketan
+3. Send email           Raf
+4. Create Task          Kerry
+5. begin chat           Kerry
+6. send chat message    Kerry
+7. open group chat      Kerry
+8. add event            Gene 
+9. send event reminder  Gene
+10. search for email    Gene
+11. log out             group
+12. login               Ketan
 
 ## Non-functional Requirements
 
