@@ -4,13 +4,13 @@
 3. Send email           Raf
 4. Create Task          Kerry
 5. begin chat           Kerry
-6. send chat message    Kerry
-7. open group chat      Kerry
-8. add event            Gene 
-9. send event reminder  Gene
-10. search for email    Gene
-11. log out             group
-12. login               Ketan
+6. open global chat     Kerry
+7. add event            Gene 
+8. send event reminder  Gene
+9. search for email     Gene
+10. log out             group
+11. login               Ketan
+12. Delete account      group
 
 ## Non-functional Requirements
 
@@ -24,22 +24,20 @@
   1. A first-time user enters our application or a user clicks on the ‘register account’ button
 
 - **Primary Sequence:**
-  
   1. The user clicks the register account button
   2. Enters a valid User Name
   3. Enters a valid password
   4. Enters First and Last Name
   5. Clicks register button
 
-
 - **Primary Postconditions:**
   1. The user is logged in to their account and can do anything a signed-in user can do
-
 
 - **Alternate Sequence:** 
   1. A user enters an invalid username or password
      System response with invalid username or password and reason why it’s invalid
      The user re-enters a valid username and password
+
 
 2. Edit User Profile
 - **Trigger:**
@@ -51,7 +49,6 @@
   3. User clicks ‘Save button’
   4. User clicks ‘Exit Profile’ button
 
-
 - **Primary Postconditions:** 
   1. All edited changes are applied to the User
 
@@ -59,6 +56,7 @@
   1. User clicks ‘Exit’ before ‘Save’ button
      System sends alert saying ‘Do you want to sasve changes’
      Systems saves changes depending on User’s answers
+
 
 3. Send email
 - **Pre-condition:** 
@@ -89,27 +87,8 @@
       - System displays error
       - System prompts Invalid schedule time ”
 
-4.  Add images to email
-- **Pre-condition:**
-  1. The user is already logged in, user is currently composing an email, and has the image URL
 
-- **Trigger:**
-  1. User presses enter image button 
-
-- **Primary Sequence:**
-  1. User is presented with a popup of screen
-  2. User inputs/pastes their URL of the image that they’ll like to input
-  3. User presses the insert button
-
-- **Primary Postconditions:** 
-  1. User sees their image on the composing email
-
-- **Alternate Sequence:**  
-  1. The URL that they imputed is not valid	
-      - The user is prompted with an error message
-      - System prompts "Invalid URL"
-
-5. Create Task
+4. Create Task
 - **Pre-condition:** 
   1. User have an account and have logged into their account
 
@@ -136,7 +115,7 @@
       - The system lets the customer to enter the date again 
 
 
-6. Begin Chat
+5. Begin Chat
 - **Pre-condition:** 
   1. User have an account and have logged into their account
 
@@ -160,6 +139,27 @@
   1. User cannot find the contact in the list of already existing contacts
       - The system allows user to enter the email address of the contact manually
       - The system asks user to save the new contact to the list of contacts
+
+
+8. Open Global Chat  
+- **Pre-condition:** 
+  1. User have an account and have logged into their account
+
+- **Trigger:**  
+  1. User Presses on the 'Chat Room' button
+
+- **Primary Sequence:**
+  1. User is prompted with the UI of the chat room
+  2. User scrolls through the messages
+  3. Displayes the message, who its sent by and to and at one time
+
+- **Primary Postconditions:**  
+  1. Printed messages
+
+- **Alternate Sequence:**
+ 1. User decides to leave the page
+    - presses the 'Home' button
+
 
 7. Add Event
 - **Pre-condition:** 
@@ -187,6 +187,7 @@
   2. Invitee rejects Event
      - The system removes invitees from email list
 
+
 8. Send Task Reminder
 - **Pre-condition:** 
   1. User have an account and have logged into their account
@@ -207,3 +208,83 @@
 - **Alternate Sequence:**
  1. Mute Task reminder
     - remove the user from the reminder
+
+
+9. Search for email
+- **Pre-condition:** 
+  1. User have an account and have logged into their account
+
+- **Trigger:**  
+  1. User Presses on the 'Inbox' button
+
+- **Primary Sequence:**
+  1. User types in the a word or message
+  2. User presses enter
+  3. Webpage outputs an emails by the search criteria
+
+- **Primary Postconditions:**  
+  1. Printed emails
+
+- **Alternate Sequence:**
+ 1. User decides to leave the page
+    - presses the 'Home' button
+
+
+10. Log out
+- **Pre-condition:** 
+  1. User have an account and have logged into their account
+
+- **Trigger:**  
+  1. User Presses on the 'Log out' button
+
+- **Primary Sequence:**
+  1. User presses log out button
+  2. User is prompted "You have been logged out."
+  3. User is sent to the home page
+
+- **Primary Postconditions:**  
+  1. User is on the home page
+
+- **Alternate Sequence:**
+ 1. User decides that they don't want to log out
+    - User can log back in
+
+
+11. Login
+    - **Pre-condition:** 
+  1. User is on the landing page
+
+- **Trigger:**  
+  1. User Presses on the 'Login' button
+
+- **Primary Sequence:**
+  1. User types in the username
+  2. User types in the password
+  3. User presses the "sign in" button
+
+- **Primary Postconditions:**  
+  1. User is on the home page
+
+- **Alternate Sequence:**
+ 1. User doesn't have an account
+    - User presses on the register account
+
+
+12. Delete Account
+    - **Pre-condition:** 
+  1. User is on the landing page
+
+- **Trigger:**  
+  1. User Presses on the 'Delete' button
+
+- **Primary Sequence:**
+  1. Users account is deleted
+  2. User is prompted with "Your account is deactivated" 
+  3. User is sent to the landing page
+
+- **Primary Postconditions:**  
+  1. User is on the landing page
+
+- **Alternate Sequence:**
+ 1. User decides that they don't want to delete account
+    - User can make a new account
