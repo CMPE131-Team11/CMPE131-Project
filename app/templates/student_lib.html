@@ -142,7 +142,7 @@ body {
 
     <header>
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Hello </a>
+        <a class="navbar-brand" href="#">Hello {{user.username}}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -152,8 +152,8 @@ body {
               <a class="nav-link" href="/home/"> Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{url_for('login')}}">Log In</a>
-              </li>
+                <a class="nav-link" href="{{url_for('logout')}}">Log Out</a>
+            </li>
           </ul>
         </div>
       </nav>
@@ -162,14 +162,16 @@ body {
     <main role="main">
 
         <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
         <div class="carousel-inner">
           <div class="carousel-item active title">
             <div class="container">
               <div class="carousel-caption text-left">
-                <h1>Welcome To Gmail Clone </h1>
-                <p>Developers: Gene Luong, Kerry Liu, Rafael Antipuesto, Ketan Ambati</p>
-                <p>Installation: $ pip install -r requirements.txt</p>
-                <p>Run Code: $ python3 main.py</p>
+                <h1> Student Librarian Home </h1>
                 </div>
               </div>
             </div>
@@ -187,19 +189,24 @@ body {
         <div class="row">
           <div class="col-lg-4">
             <img class="rounded-circle" width="140" height="140">
-            <h2>Sign Up</h2>
-            <p>Go to http://127.0.0.1:5000/sign_up/</p>
-            <p>Register a new username with a password, you cannot have multiple same usernames</p>
-            <p>This will auto log you into the home page</p>
-            <p><a class="btn btn-secondary" href="{{url_for('sign_up')}}" role="button">Go To Sign In &raquo;</a></p>
+            <h2>Checkout Book</h2>
+            <p><a class="btn btn-secondary" href="{{url_for('checkout')}}" role="button">Checkout Books &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4">
-            <img class="rounded-circle"  width="140" height="140">
-            <h2>Log In</h2>
-            <p>Go to http://127.0.0.1:5000/login/ or click on Go To</p>
-            <p>Enter existing loggin credentials</p>
-            <p>This will send you to home if the credentials exist</p>
-            <p><a class="btn btn-secondary" href="{{url_for('login')}}" role="button">Go To Log In &raquo;</a></p>
+            <img class="rounded-circle" width="140" height="140">
+            <h2>Checkin</h2>
+            <p><a class="btn btn-secondary" href="{{url_for('checkin')}}" role="button">Checkin Books &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <img class="rounded-circle" width="140" height="140">
+            <h2>Request Books</h2>
+            <p><a class="btn btn-secondary" href="{{url_for('request_books')}}" role="button">Request Books &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <img class="rounded-circle" width="140" height="140">
+            <h2>Log Out</h2>
+            <p>Log Out of your account</p>
+            <p><a class="btn btn-secondary" href="{{url_for('logout')}}" role="button">Log Out &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4">
             <img class="rounded-circle" width="140" height="140">
@@ -215,26 +222,8 @@ body {
         <hr class="featurette-divider">
 
         <div class="row featurette">
-          <div class="col-md-7">
-            <h2 class="featurette-heading">Send Email. <span class="text-muted">It'll blow your mind.</span></h2>
-            <p class="lead">1. Click 'Send Email' button</p>
-            <p class="lead">2. Enter the subject </p>
-            <p class="lead">3. Enter recipient email</p>
-            <p class="lead"> 4. Enter body </p>
-            <p class="lead">5. Press Send Button</p>
-            <p class="lead">Note: This may prompt a verification link in the terminal</p>
-            <p class="lead">Capable of searching emails.</p>
-          </div>
-          <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" src="https://cdn-icons-png.flaticon.com/512/2989/2989993.png" alt="Generic placeholder image">
-          </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
           <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading">Edit User Profile. <span class="text-muted">See for yourself.</span></h2>
+            <h2 class="featurette-heading">Edit User Profile <span class="text-muted">See for yourself.</span></h2>
             <p class="lead">1. Successfully login to your account</p>
             <p class="lead">2. Click the 'Edit Profile' button at the top of the screen</p>
             <p class="lead">3. Enter in the desired changes into the username and password text boxes</p>
@@ -245,64 +234,6 @@ body {
             <img class="featurette-image img-fluid mx-auto" src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=">
           </div>
         </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-          <div class="col-md-7">
-            <h2 class="featurette-heading">Add Calendar Events. <span class="text-muted">Mindblowing.</span></h2>
-            <p class="lead">1. Go to http://127.0.0.1:5000/home/</p>
-            <p class="lead">2. Click the 'Add Event To Calendar' button at the top of the screen</p>
-            <p class="lead">3. Enter in the Title, Start Time, End Time and Attendees (one for now)</p>
-            <p class="lead">4. Enter a description (optional)</p>
-            <p class="lead">5. Hit sent, this will update your gmail calendar</p>
-            <p class="lead">6. Make sure the End time is greater than the start time</p>
-            <p class="lead">Note: This may prompt a verification link in the terminal</p>
-            <p class="lead">Capable of sending reminder notifications to user</p>
-
-          </div>
-          <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" src="https://pixlok.com/wp-content/uploads/2021/10/calendar-icon-93nksnfie.png" alt="Generic placeholder image">
-          </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-          <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading">Create Tasks. <span class="text-muted">Check it out.</span></h2>
-            <p class="lead">1. After logged into your account, click on Create a Task</p>
-            <p class="lead">2. Enter the email address that you want the task to assign to</p>
-            <p class="lead">3. Enter the title for your task</p>
-            <p class="lead">4. Enter the task that you need to finish under that title. </p>
-            <p class="lead">5. You will be asked to sign in with your Gmail account for authenticaion.</p>
-            <p class="lead">6. Go to Gmail and you will see your task being added in your Gmail Task located on the right side of the Gmail inbox page.</p>
-          </div>
-          <div class="col-md-5 order-md-1">
-            <img class="featurette-image img-fluid mx-auto" src="https://icons.veryicon.com/png/o/miscellaneous/standard/task-32.png">
-          </div>
-        </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row featurette">
-          <div class="col-md-7">
-            <h2 class="featurette-heading">Group Chat. <span class="text-muted">Build Connection.</span></h2>
-            <p class="lead">1. After logged in to your account, go to Chat Room</p>
-            <p class="lead">2. You will be able to see every user registered in the website</p>
-            <p class="lead">3. Choose the person you want to talk to by inputing their username</p>
-            <p class="lead">4. Enter the message you want to send</p>
-            <p class="lead">5. Click send</p>
-            <p class="lead">Capable of initiating chat and group chat function</p>
-
-          </div>
-          <div class="col-md-5">
-            <img class="featurette-image img-fluid mx-auto" src="https://pixlok.com/wp-content/uploads/2021/10/calendar-icon-93nksnfie.png" alt="Generic placeholder image">
-          </div>
-        </div>
-
-        <hr class="featurette-divider">
-
         <!-- /END THE FEATURETTES -->
 
       </div><!-- /.container -->
@@ -311,7 +242,7 @@ body {
       <!-- FOOTER -->
       <footer class="container">
         <p class="float-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2023 Team11 Inc. </p>
+        <p>&copy; 2017-2018 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
       </footer>
     </main>
 
@@ -329,4 +260,10 @@ body {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
 
   </body>
+<!-- <h1>Hello {{user.username}}</h1>
+
+<form action="" method="POST" novalidate>
+    <a href="{{url_for('delete_account')}}">Delete</a>
+    <a href="{{url_for('logout')}}">Log Out</a>
+</form> -->
 {% endblock %}

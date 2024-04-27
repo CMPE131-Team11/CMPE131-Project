@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, DateTimeLocalField, IntegerField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField, SelectField
 from wtforms.validators import DataRequired
 
 class login_form(FlaskForm):
@@ -8,14 +8,9 @@ class login_form(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
-class create_tasks_form(FlaskForm):
-    email = StringField('Email', validators=[DataRequired()])
-    title = StringField('Task List', validators=[DataRequired()])
-    task_subject = StringField('Task', validators=[DataRequired()])
-    submit = SubmitField('Add')
-
 class sign_up_form(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email')
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Sign Up')
 
@@ -24,26 +19,21 @@ class edit_profile_form(FlaskForm):
     new_password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Edit')
 
-class send_email_form(FlaskForm):
-    recipient = StringField('Recipient', validators = [DataRequired()])
-    subject = TextAreaField('Subject', validators = [DataRequired()])
-    body = TextAreaField('Body', validators = [DataRequired()])
-    submit = SubmitField('Send')
+class order_form(FlaskForm):
+    book = StringField('Book Name', validators=[DataRequired()])
+    quantity = IntegerField('1')
+    student_only = BooleanField('Student Only')
+    submit = SubmitField('Order')
+    
+class checkout_form(FlaskForm):
+    book = StringField('Book Name', validators=[DataRequired()])
+    submit = SubmitField('Checkout')
 
-class create_event_form(FlaskForm):
-    start_time = DateTimeLocalField('Start Time', validators = [DataRequired()], format='%Y-%m-%dT%H:%M')
-    end_time = DateTimeLocalField('End Time', validators = [DataRequired()], format='%Y-%m-%dT%H:%M')
-    title = TextAreaField('Title', validators = [DataRequired()])
-    description = TextAreaField('Description')
-    attendees = TextAreaField('Attendees', validators = [DataRequired()])
-    reminder = IntegerField('Minutes')
-    submit = SubmitField('Send')
-
-class send_chat_form(FlaskForm):
-    receiver = StringField('Recipient Username', validators=[DataRequired()])
-    message = TextAreaField('Message', validators = [DataRequired()])
-    submit = SubmitField('Send')
-
-class search_form(FlaskForm):
-    search_string = StringField('Search String', validators=[DataRequired()])
-    search = SubmitField('search')
+class promotion_form(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    role_select = SelectField('Role', choices=[('Admin', 'Admin'), 
+                                            ('Librarian', 'Librarian'), 
+                                            ('Student_Lib', 'Student Librarian'),
+                                            ("Student", "Student"),
+                                            ("Public", "Public")])
+    submit = SubmitField('Checkout')
